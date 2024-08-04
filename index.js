@@ -69,7 +69,9 @@ app.get('/delete_book',async(req,res)=>{
         res.redirect('/');
 })
 app.use((req,res)=>{
+        if(connection){
         res.sendFile(path.join(__dirname,'/views/404.html'));
+        }
 })
 
 app.listen(8000,()=>{
