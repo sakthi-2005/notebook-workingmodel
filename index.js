@@ -37,9 +37,9 @@ app.use(express.static(path.join(__dirname,'static')));
 
 app.get('/',async (req,res)=>{
 
-        // if(!portconnection){
-        //         return res.status(404).sendFile(path.join(__dirname,'/views/404.html'));
-        // }
+         if(portconnection){
+                 return res.status(404).sendFile(path.join(__dirname,'/views/404.html'));
+         }
         if(!connection){
                 return  res.status(404).sendFile(path.join(__dirname,'/views/datanotfound.html'));
           }
@@ -68,11 +68,11 @@ app.get('/delete_book',async(req,res)=>{
         await user.deleteOne({_id:id});
         res.redirect('/');
 })
-// app.use((req,res)=>{
-//         res.sendFile(path.join(__dirname,'/views/404.html'));
-// })
+  app.use((req,res)=>{
+         res.sendFile(path.join(__dirname,'/views/404.html'));
+ })
 
-app.listen(8000 || process.env.PORT,()=>{
+app.listen(8000,()=>{
         portconnection=true;
         console.log("sakthi");
 });
