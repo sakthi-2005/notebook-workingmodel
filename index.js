@@ -40,7 +40,9 @@ app.get('/',async(req,res)=>{
         if(req.query.status == 1){
                 res.sendFile(path.join(__dirname,'views','register.html'));
         }
+        else{
         res.render('loginpage',{});
+        }
 })
 
 app.post('/',async(req,res)=>{
