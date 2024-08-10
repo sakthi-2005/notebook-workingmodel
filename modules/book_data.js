@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-note= new mongoose.Schema({
+const note= new mongoose.Schema({
 
     title: String,
     author: String,

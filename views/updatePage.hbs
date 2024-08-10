@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update page</title>
+</head>
+<body>
+    <div id="form-div">
+        <form method="post" action="/user/update_book/{{user_id}}?update_id={{book_details._id}}">
+            <table>
+                <tr>
+            <td><label for="title" >Title</label></td>
+            <td><input type="text" name="title" id="title" value="{{book_details.title}}"></td>
+            </tr>
+            <tr>
+            <td><label for="author">Author</label></td>
+            <td><input type="text" name="author" id="author" value="{{book_details.author}}"></td>
+            </tr>
+            <tr>
+            <td><label for="description">Description</label></td>
+            <td><textarea name="description">{{book_details.description}}</textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"><center><button>Update</button></center></td>
+            </tr>
+            </table>
+        </form>
+    </div>
+</body>
+<style>
+    div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+    input{
+      background-color: rgba(255, 255, 255, 0.542);  
+    }
+    textarea{
+        background-color: rgba(255, 255, 255, 0.553);
+    }
+    body{
+        margin: 0;
+        background-color: black;
+    }
+    button{
+        cursor: pointer;
+    }
+</style>
+</html>

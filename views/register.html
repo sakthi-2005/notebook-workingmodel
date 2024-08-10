@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+</head>
+<body>
+    <div id="parent-div">
+        <div id="child-div">
+            <p></p>
+            <form method="post" action="/?status=1" >
+                <table>
+                    <thead>
+                        <td colspan="2" style="padding-bottom: 50px; font-weight: bolder; font-size: xX-large; font-family:'Lucida Sans'; text-align: center; color: red;"> REGISTER </td>
+                    </thead>
+                    <tr>
+                        <td><label>Name</label></td>
+                        <td><input type="text" name="name" class="name" value="" required></td>
+                    </tr>
+                    <tr>
+                        <td><label>Password</label></td>
+                        <td><input type="password" name="pass" class="pass" value="" required></td>
+                    </tr>
+                    <tr>
+                        <td><label>re-enter Password</label></td>
+                        <td  style="padding-bottom: 20px;"><input type="password" name="re-pass" class="re-pass" value="" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"  style="padding-bottom: 5px;"><center><button onclick="fun()">REGISTER</button></center></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><center>Already Have an account? <a href="/?status=0">LOGIN</a></center></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+<style>
+    *{
+        margin: 0;
+    }
+
+    #parent-div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 97vh;
+        background-color: rgb(252, 183, 56);
+    }
+
+
+    #child-div{
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        padding-bottom: 3vh;
+        height: 45%;
+        border-radius:10px;
+        border: solid black 1px;
+        width:50%;
+        background-color: rgba(255, 255, 255, 0.321);
+        font-family:Georgia;
+        font-weight: 500;
+    }
+
+    #child-div input{
+        background-color: rgba(240, 248, 255, 0.501);
+    }
+    a{
+        text-decoration: none;
+        color: rgb(0, 47, 255);
+    }
+    a:hover{
+        color: rgba(71, 71, 251, 0.719);
+    }
+    button{
+        cursor: pointer;
+        height: 25px;
+        width: 37%;
+        background-color: red;
+        font-weight: bold;
+    }
+    button:hover{
+        background-color: rgb(220, 21, 21);
+    }
+    table{
+        height: 8vh;
+        width: 10vw;
+        border-collapse: separate;
+        border-spacing: 7px;
+    }
+
+    @media screen and (max-width:426px) {
+        #child-div{
+            width:300px;
+        }
+        
+    }
+</style>
+<script>
+
+    function fun(){
+        const name = document.querySelector('.name').value;
+        const pass =document.querySelector('.pass').value;
+        const repass =document.querySelector('.re-pass').value;
+        const user_regx =/^[A-Za-z0-9_-]+$/;
+        const pass_regx=/^[A-Za-z0-9_@-]+$/;
+
+        if(!user_regx.test(name)){
+            console.log("user id wrong");
+            event.preventDefault();
+        }
+
+        if(pass.length < 6){
+            console.log("password must have atlest 5 character");
+            event.preventDefault();
+        }
+
+        if(pass != repass){
+            console.log('password doesnt match');
+            event.preventDefault();
+        }
+
+        if(name.length < 6){
+            console.log("username must have min 6 latters");
+            event.preventDefault();
+        }
+        if(name.length >=15){
+            console.log("username must have max 10 latters");
+            event.preventDefault();
+        }
+
+    }
+</script>
+</html>

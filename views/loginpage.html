@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    <div id="parent-div">
+        <div id="child-div">
+            <p></p>
+            <form method="post" action="/?status=0">
+                <table>
+                    <thead>
+                        <td colspan="2" style="padding-bottom: 30px; font-weight: bolder; font-size: xx-large; font-family:'Lucida Sans'; color: rgb(255, 3, 3);"> LOG IN </td>
+                    </thead>
+                    <tr>
+                        <td><label>Name</label></td>
+                        <td><input type="text" name="name" required></td>
+                    </tr>
+                    <tr>
+                        <td><label>Password</label></td>
+                        <td  style="padding-bottom: 10px;"><input type="password" name="pass" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"  style="padding-bottom: 5px;"><center><button>LOG IN</button></center></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><center>Don't Have an account? <a href="/?status=1">Register</a></center></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+<style>
+    *{
+        margin: 0;
+    }
+
+    #parent-div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 97vh;
+        background-color: rgb(252, 183, 56);
+    }
+
+
+    #child-div{
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        padding-bottom: 5%;
+        height: 35%;
+        border-radius:10px;
+        border: solid black 1px;
+        width:40%;
+        background-color: rgba(255, 255, 255, 0.321);
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-weight: 500;
+    }
+
+    #child-div input{
+        background-color: rgba(240, 248, 255, 0.501);
+    }
+    a{
+        text-decoration: none;
+        color: rgb(0, 47, 255);
+    }
+    a:hover{
+        color: rgba(71, 71, 251, 0.719);
+        text-decoration: underline;
+    }
+    button{
+        cursor: pointer;
+        height: 25px;
+        border-radius: 10px;
+        width: 35%;
+        background-color: red;
+        font-weight: bold;
+    }
+    button:hover{
+        background-color: rgb(220, 21, 21);
+    }
+    table{
+        border-collapse: separate;
+        border-spacing: 7px;
+        text-align: center;
+    }
+
+    @media screen and (max-width:426px) {
+        #child-div{
+            width:300px;
+        }
+    }
+</style>
+<script>
+
+</script>
+</html>

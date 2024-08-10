@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>notebook</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../static/style.css">
     
 </head>
 <body>
@@ -19,12 +19,13 @@
             <p>&nbsp;&nbsp;&nbsp;&nbsp; Create a responsive notes application using HTML, CSS, and JavaScript. Users can add and delete notes with a user-friendly interface.and ensure compatibility across devices. Focus on simplicity, usability.</p>
                 <button onclick="deletebooks(event)">Delete</button>
         </div>
-          {{#each data}}
+          {{#each booksdata}}
     <div class="books-container">
         <h2>{{this.title}}</h2>
         <h5>{{this.author}}</h5>
         <p>{{this.description}}</p>
-        <button onclick=deletebooks(event)><a href="/delete_book/?delete_book={{this._id}}">Delete</a></button>
+        <button><a href="/user/edit_book/{{../user_id}}?edit_id={{this.id}}">Edit</a></button>
+        <button onclick=deletebooks(event)><a href="/user/delete_book/{{../user_id}}?delete_book={{this._id}}">Delete</a></button>
         </div>
     {{/each}}
     </div>
@@ -32,7 +33,7 @@
     <div class="popup-overlay"></div>
     <div class="popup-box">
         <h2>Add Book</h2>
-        <form method="post" action="/">
+        <form method="post" action="/user/{{user_id}}">
             <input type="text" placeholder="book title" id="book-title-input" name="title">
             <input type="text" placeholder="book-author" id="book-author-input" name="author" >
             <textarea placeholder="short description" id="book-description-input" name="description" ></textarea>
@@ -43,7 +44,7 @@
     </div>
     <button class="add-button" id="add-popup-button">+</button>
     
-    <script src="script.js"></script>
+    <script src="../static/script.js"></script>
    
     
 </body>

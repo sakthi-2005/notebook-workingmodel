@@ -4,12 +4,13 @@ const bodyparser=require('body-parser');
 const path=require('path');
 const exhbs=require('express-handlebars');
 const mongoose=require('mongoose');
-const user = require('./modules/storemodel');
+const user = require('./modules/user_data');
+const book = require('./modules/book_data');
 let connection =false;
-let portconnection =false;
 
 app.engine('hbs',exhbs.engine({
         extname:'hbs',
+        defaultLayout: false,
         layoutsDir : path.join(__dirname,'views'),
         runtimeOptions:{
                allowProtoPropertiesByDefault:true,
@@ -32,47 +33,108 @@ connection=false;
 
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
-app.use(express.static(path.join(__dirname,'static')));
+app.use('/static',express.static(path.join(__dirname,'static')));
+
+app.get('/',async(req,res)=>{
+
+        if(req.query.status == 1){
+                res.sendFile(path.join(__dirname,'views','register.html'));
+        }
+        res.sendFile(path.join(__dirname,'views','loginpage.html'));
+})
+
+app.post('/',async(req,res)=>{
 
 
-app.get('/',async (req,res)=>{
+        if(req.query.status == 1){
+                let name = req.body.name;
+                let pass = req.body.pass;
 
-         // if(!portconnection){
-         //         return res.status(404).sendFile(path.join(__dirname,'/views/404.html'));
-         // }
+                const user_data =new user({
+                        name : name,
+                        pass : pass,
+                        books :[]
+                });
+                await user_data.save();
+                return res.redirect('/?status=0');
+        }
+        else{
+        let db_name= await user.findOne({name:req.body.name , pass:req.body.pass});
+                if(!db_name ){
+                        res.send("no data");
+                        
+                }
+                else{
+                        return res.redirect(`/user/${db_name._id}`);
+                }
+                
+        };
+});
+
+app.get('/user/:user_id',async (req,res)=>{
+        const user_id = req.params.user_id;
+
         if(!connection){
                 return  res.status(404).sendFile(path.join(__dirname,'/views/datanotfound.html'));
           }
-          let data = await user.find({});
-          res.render('main',{data});
+          
+          let data = await user.findOne({_id:user_id}).populate('books');
+          let booksdata=data.books;
+          res.render('main',{booksdata,user_id});
         });
 
-app.post('/',async(req,res)=>{
+app.post('/user/:user_id',async(req,res)=>{
         if(req.body.title!='' && req.body.author!='' && req.body.description!=''){
                 let Title=req.body.title;
                 let Author=req.body.author;
                 let Description=req.body.description;
-        user_detail=new user({
+        book_detail=new book({
                 title: Title,
                 author:Author,
                 description:Description
         })
-        
-         await user_detail.save();
-        return res.redirect('/');
+        let user_id=req.params.user_id;
+        await book_detail.save();
+        const create_book=await user.findOne({_id:user_id});
+        await create_book.books.push(book_detail._id);
+        await create_book.save();
+        return res.redirect(`/user/${user_id}`);
         }
 });
 
-app.get('/delete_book',async(req,res)=>{
-        let id = req.query.delete_book;
-        await user.deleteOne({_id:id});
-        res.redirect('/');
+app.get('/user/delete_book/:user_id',async(req,res)=>{
+        let delete_id = req.query.delete_book;
+        let user_id=req.params.user_id;
+        await book.deleteOne({_id:delete_id});
+        // delete_book=await user.findOne({ _id:user_id}).populate({
+        //         path:'books',
+        //         match:{_id:delete_id}
+        // })
+        // delete_book.books
+        await user.updateOne({_id:user_id},{$pull:{books:delete_id}})
+        res.redirect(`/user/${user_id}`);
 })
+
+app.get('/user/edit_book/:user_id',async(req,res)=>{
+        let edit_id= req.query.edit_id;
+        let user_id=req.params.user_id;
+        let bookdetails = await user.findOne({_id:user_id}).populate({
+                path:'books',
+                match :{_id:edit_id}
+});
+        let book_details=bookdetails.books[0];
+        return res.render('updatePage',{book_details ,user_id});
+});
+
+app.post('/user/update_book/:user_id',async(req,res)=>{
+        let update_id= req.query.update_id;
+        let user_id=req.params.user_id;
+        await book.findByIdAndUpdate(update_id,{title:req.body.title,author:req.body.author,description:req.body.description});
+        res.redirect(`/user/${user_id}`);
+})
+
   app.use((req,res)=>{
          res.sendFile(path.join(__dirname,'/views/404.html'));
  })
 
-app.listen(process.env.PORT || 8000,()=>{
-        portconnection=true;
-        console.log("sakthi");
-});
+app.listen(8000);
