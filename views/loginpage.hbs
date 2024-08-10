@@ -9,7 +9,7 @@
     <div id="parent-div">
         <div id="child-div">
             <p></p>
-            <form method="post" action="/?status=0">
+            <form method="post" action="/?status=0" onsubmit=fun()>
                 <table>
                     <thead>
                         <td colspan="2" style="padding-bottom: 30px; font-weight: bolder; font-size: xx-large; font-family:'Lucida Sans'; color: rgb(255, 3, 3);"> LOG IN </td>
@@ -29,6 +29,7 @@
                         <td colspan="2"><center>Don't Have an account? <a href="/?status=1">Register</a></center></td>
                     </tr>
                 </table>
+                <h4 style="align-self: center; text-align:center">{{message}}</h4>
             </form>
         </div>
     </div>
@@ -96,6 +97,7 @@
     }
 </style>
 <script>
+
 
 </script>
 </html>

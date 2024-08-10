@@ -40,7 +40,7 @@ app.get('/',async(req,res)=>{
         if(req.query.status == 1){
                 res.sendFile(path.join(__dirname,'views','register.html'));
         }
-        res.sendFile(path.join(__dirname,'views','loginpage.html'));
+        res.render('loginpage',{});
 })
 
 app.post('/',async(req,res)=>{
@@ -61,8 +61,8 @@ app.post('/',async(req,res)=>{
         else{
         let db_name= await user.findOne({name:req.body.name , pass:req.body.pass});
                 if(!db_name ){
-                        res.send("no data");
-                        
+                        let message ="user not found";
+                        res.render('loginpage',{message});
                 }
                 else{
                         return res.redirect(`/user/${db_name._id}`);
