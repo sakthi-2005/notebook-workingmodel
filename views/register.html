@@ -33,6 +33,7 @@
                         <td colspan="2"><center>Already Have an account? <a href="/?status=0">LOGIN</a></center></td>
                     </tr>
                 </table>
+                <header id="errormessage"></header>
             </form>
         </div>
     </div>
@@ -98,6 +99,12 @@
         }
         
     }
+
+    #errormessage{
+        text-align: center;
+        align-self: center;
+        color: red;
+    }
 </style>
 <script>
 
@@ -105,30 +112,32 @@
         const name = document.querySelector('.name').value;
         const pass =document.querySelector('.pass').value;
         const repass =document.querySelector('.re-pass').value;
+        const errormessage=document.getElementById('errormessage');
+
         const user_regx =/^[A-Za-z0-9_-]+$/;
         const pass_regx=/^[A-Za-z0-9_@-]+$/;
 
         if(!user_regx.test(name)){
-            console.log("user id wrong");
+            errormessage.innerHTML="User Name must contain only alpha numeric characters and _ , -";
             event.preventDefault();
         }
 
         if(pass.length < 6){
-            console.log("password must have atlest 5 character");
+            errormessage.innerHTML="password must be atlest of 6 character";
             event.preventDefault();
         }
 
         if(pass != repass){
-            console.log('password doesnt match');
+            errormessage.innerHTML="password must match";
             event.preventDefault();
         }
 
         if(name.length < 6){
-            console.log("username must have min 6 latters");
+            errormessage.innerHTML="User Name must be atlest of 6 characters";
             event.preventDefault();
         }
         if(name.length >=15){
-            console.log("username must have max 10 latters");
+            errormessage.innerHTML="User Name must contain maximum of 15 character";
             event.preventDefault();
         }
 

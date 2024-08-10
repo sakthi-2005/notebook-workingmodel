@@ -29,8 +29,6 @@ console.log("error");
 connection=false;
 });
 
-
-
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 app.use('/static',express.static(path.join(__dirname,'static')));
@@ -38,13 +36,14 @@ app.use('/static',express.static(path.join(__dirname,'static')));
 app.get('/',async(req,res)=>{
 
         if(req.query.status == 1){
-                res.sendFile(path.join(__dirname,'views','register.html'));
+                return res.sendFile(path.join(__dirname,'views','register.html'));
         }
+        else{
         res.render('loginpage',{});
+        }
 })
 
 app.post('/',async(req,res)=>{
-
 
         if(req.query.status == 1){
                 let name = req.body.name;
@@ -67,7 +66,6 @@ app.post('/',async(req,res)=>{
                 else{
                         return res.redirect(`/user/${db_name._id}`);
                 }
-                
         };
 });
 
